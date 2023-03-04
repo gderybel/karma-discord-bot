@@ -1,6 +1,7 @@
 from os import getcwd, path, walk
 from fnmatch import filter as fnfilter
 from math import ceil
+from datetime import datetime
 import discord
 from discord.ext import commands
 from discord.utils import get
@@ -40,6 +41,11 @@ async def karma(context: commands.context.Context, subcommand: str = None, param
     elif subcommand == "leave":
         await leave(context)
     else:
+        print(f"\
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+SUCCESS\tkarma help invoked by \
+{str(context.author)} ({context.author.id}).\
+")
         await context.reply("""
 Here are the available commands :
 
@@ -62,6 +68,11 @@ async def play(context: commands.context.Context, sound: str):
     file_name = f"{getcwd()}/sounds/{sound}.mp3"
 
     if not path.exists(file_name):
+        print(f"\
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+ERROR\tkarma play invoked by \
+{str(context.author)} ({context.author.id}).\
+")
         return await context.reply(
             'This sound does not exist, please use \'/karma list\' to list available sounds.'
         )
@@ -73,10 +84,20 @@ async def play(context: commands.context.Context, sound: str):
             else:
                 bot_voice_channel = await context.author.voice.channel.connect()
         except (discord.ClientException, discord.DiscordException):
+            print(f"\
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+ERROR\tkarma play invoked by \
+{str(context.author)} ({context.author.id}).\
+")
             return await context.reply('Failed to connect to the voice channel!')
 
         sound_stream = discord.FFmpegPCMAudio(file_name)
         bot_voice_channel.play(sound_stream)
+    print(f"\
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+SUCCESS\tkarma play invoked by \
+{str(context.author)} ({context.author.id}).\
+")
 
 async def list_available_sounds(context: commands.context.Context, page: int):
     """List all available sounds, includes mp3 files in project_root/sounds/
@@ -101,6 +122,11 @@ async def list_available_sounds(context: commands.context.Context, page: int):
     paged_available_sounds = available_sounds[page*10-10:page*10]
 
     if len(paged_available_sounds) <= 0:
+        print(f"\
+            {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+            ERROR\tkarma list invoked by \
+            {str(context.author)} ({context.author.id}).\
+        ")
         return await context.reply("Invalid list page.")
     else:
         available_sounds_text = '\n'.join(
@@ -113,6 +139,11 @@ Here's a list of available sounds :
 
 Page {page}/{ceil(len(available_sounds)/10)}, You can display the others by specifying the page e.g : {bot.command_prefix}karma list 2
 """)
+    print(f"\
+        {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+        SUCCESS\tkarma list invoked by \
+        {str(context.author)} ({context.author.id}).\
+    ")
 
 async def leave(context: commands.context.Context):
     """Leaves the voice channel
@@ -123,8 +154,18 @@ async def leave(context: commands.context.Context):
         The context (provided by Discord)
     """
     if context.voice_client:
+        print(f"\
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+SUCCESS\tkarma leave invoked by \
+{str(context.author)} ({context.author.id}).\
+")
         await context.voice_client.disconnect()
     else:
+        print(f"\
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+ERROR\tkarma leave invoked by \
+{str(context.author)} ({context.author.id}).\
+")
         await context.reply("I am not currently connected to a voice channel.")
 
 token = config_parser.parse_configuration()
