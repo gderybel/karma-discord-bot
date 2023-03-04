@@ -97,7 +97,7 @@ ERROR\tkarma play invoked by \
 ERROR\tkarma play invoked by \
 {str(context.author)} ({context.author.id}).\
 ")
-                    context.reply("You are not in a voice channel.")
+                    return await context.reply("You are not in a voice channel.")
         except (discord.ClientException, discord.DiscordException):
             print(f"\
 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
