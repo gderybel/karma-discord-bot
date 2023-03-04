@@ -15,6 +15,11 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+@bot.event
+async def on_ready():
+    print(f'Logged in as {bot.user}')
+    await bot.change_presence(activity=discord.Game("I'm back."))
+
 @bot.command(name='karma')
 async def karma(context: commands.context.Context, subcommand: str = None, parameter1: str = None):
     """Main bot funtion
