@@ -147,13 +147,13 @@ ERROR\tkarma list invoked by \
         available_sounds_text = '\n'.join(
             [f'{available_sound}' for available_sound in paged_available_sounds]
         )
-        await context.reply(f"""
+        await context.reply(f"""```
 Here's a list of available sounds :
 
 {available_sounds_text}
 
 Page {page}/{ceil(len(available_sounds)/10)}, You can display the others by specifying the page e.g : {bot.command_prefix}karma list 2
-""")
+```""")
     print(f"\
 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
 SUCCESS\tkarma list invoked by \
