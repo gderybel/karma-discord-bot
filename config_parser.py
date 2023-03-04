@@ -1,6 +1,7 @@
 from configparser import ConfigParser
+from os import path
 
-def parse_configuration(config_file: str = "config.ini") -> str:
+def parse_configuration(config_file: str = f"{path.dirname(path.abspath(__file__))}/config.ini") -> str:
     """Parse credentials to authenticate with Discord bot token.
 
     Parameters

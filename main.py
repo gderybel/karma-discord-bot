@@ -1,4 +1,4 @@
-from os import getcwd, path, walk
+from os import path, walk
 from fnmatch import filter as fnfilter
 from math import ceil
 from datetime import datetime
@@ -72,7 +72,7 @@ async def play(context: commands.context.Context, sound: str):
     sound : str
         The sound to play
     """
-    file_name = f"{getcwd()}/sounds/{sound}.mp3"
+    file_name = f"{path.dirname(path.abspath(__file__))}/sounds/{sound}.mp3"
 
     if not path.exists(file_name):
         print(f"\
@@ -124,7 +124,7 @@ async def list_available_sounds(context: commands.context.Context, page: int):
     page : int
         The page to display
     """
-    folder_path = f"{getcwd()}/sounds/"
+    folder_path = f"{path.dirname(path.abspath(__file__))}/sounds/"
     pattern = '*.mp3'
 
     available_sounds = []
@@ -138,10 +138,10 @@ async def list_available_sounds(context: commands.context.Context, page: int):
 
     if len(paged_available_sounds) <= 0:
         print(f"\
-            {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
-            ERROR\tkarma list invoked by \
-            {str(context.author)} ({context.author.id}).\
-        ")
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+ERROR\tkarma list invoked by \
+{str(context.author)} ({context.author.id}).\
+")
         return await context.reply("Invalid list page.")
     else:
         available_sounds_text = '\n'.join(
@@ -155,10 +155,10 @@ Here's a list of available sounds :
 Page {page}/{ceil(len(available_sounds)/10)}, You can display the others by specifying the page e.g : {bot.command_prefix}karma list 2
 """)
     print(f"\
-        {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
-        SUCCESS\tkarma list invoked by \
-        {str(context.author)} ({context.author.id}).\
-    ")
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+SUCCESS\tkarma list invoked by \
+{str(context.author)} ({context.author.id}).\
+")
 
 async def leave(context: commands.context.Context):
     """Leaves the voice channel
