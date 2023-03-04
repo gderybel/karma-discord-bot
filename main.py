@@ -2,6 +2,7 @@ from os import path, walk
 from fnmatch import filter as fnfilter
 from math import ceil
 from datetime import datetime
+import re
 import discord
 from discord.ext import commands
 from discord.utils import get
@@ -72,6 +73,16 @@ async def play(context: commands.context.Context, sound: str):
     sound : str
         The sound to play
     """
+    if bool(re.search(r'[^a-zA-Z0-9]', sound)):
+        print(f"\
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+ERROR\tkarma play invoked by \
+{str(context.author)} ({context.author.id}).\
+")
+        return await context.reply(
+            f'This sound does not exist, please use \'{bot.command_prefix}karma list\' to list available sounds.'
+        )
+
     file_name = f"{path.dirname(path.abspath(__file__))}/sounds/{sound}.mp3"
 
     if not path.exists(file_name):
