@@ -81,7 +81,7 @@ ERROR\tkarma play invoked by \
 {str(context.author)} ({context.author.id}).\
 ")
         return await context.reply(
-            'This sound does not exist, please use \'/karma list\' to list available sounds.'
+            f'This sound does not exist, please use \'{bot.command_prefix}karma list\' to list available sounds.'
         )
     else:
         try:
