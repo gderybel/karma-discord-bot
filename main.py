@@ -46,13 +46,13 @@ async def karma(context: commands.context.Context, subcommand: str = None, param
 SUCCESS\tkarma help invoked by \
 {str(context.author)} ({context.author.id}).\
 ")
-        await context.reply("""
+        await context.reply(f"""
 Here are the available commands :
 
-/karma help -> show this menu
-/karma play [sound] -> play the given sound
-/karma list [page:optional]-> list available sounds
-/karma leave -> Karma leaves the voice channel
+{bot.command_prefix}karma help -> show this menu
+{bot.command_prefix}karma play [sound] -> play the given sound
+{bot.command_prefix}karma list [page:optional]-> list available sounds
+{bot.command_prefix}karma leave -> Karma leaves the voice channel
 """)
 
 async def play(context: commands.context.Context, sound: str):
