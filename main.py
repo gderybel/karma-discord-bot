@@ -89,7 +89,15 @@ ERROR\tkarma play invoked by \
             if bot_voice_channel and bot_voice_channel.is_connected():
                 await bot_voice_channel.move_to(context.author.voice.channel)
             else:
-                bot_voice_channel = await context.author.voice.channel.connect()
+                if context.author.voice:
+                    bot_voice_channel = await context.author.voice.channel.connect()
+                else:
+                    print(f"\
+{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
+ERROR\tkarma play invoked by \
+{str(context.author)} ({context.author.id}).\
+")
+                    context.reply("You are not in a voice channel.")
         except (discord.ClientException, discord.DiscordException):
             print(f"\
 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} \
